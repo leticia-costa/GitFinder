@@ -1,0 +1,83 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base);
+
+  &:hover {
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-accent-primary);
+    transform: translateY(-1px);
+
+    .arrow {
+      color: var(--color-accent-primary);
+      transform: translateX(3px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-default);
+  flex-shrink: 0;
+  transition: border-color var(--transition-base);
+
+  .card:hover & {
+    border-color: var(--color-accent-primary);
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.login {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profileLink {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-text-link);
+    text-decoration: underline;
+  }
+}
+
+.arrow {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition:
+    color var(--transition-base),
+    transform var(--transition-base);
+}
