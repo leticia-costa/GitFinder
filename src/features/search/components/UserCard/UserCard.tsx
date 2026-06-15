@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './UserCard.module.scss'
 import type { UserSearchItem } from '../../types/UserSearchItem'
+import { Avatar } from '../../../../common/components/Avatar/Avatar'
 
 interface UserCardProps {
   user: UserSearchItem
@@ -18,12 +19,7 @@ export const UserCard = ({ user }: UserCardProps) => {
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && navigate(`/user/${user.login}`)}
     >
-      <img
-        className={styles.avatar}
-        src={user.avatar_url}
-        alt={`Avatar de ${user.login}`}
-        loading="lazy"
-      />
+      <Avatar src={user.avatar_url} alt={`Avatar de ${user.login}`} size="md" />
 
       <div className={styles.info}>
         <span className={styles.login}>{user.login}</span>

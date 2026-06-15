@@ -1,0 +1,132 @@
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.heroTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.repoMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.ownerLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-text-link);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+  }
+}
+
+.separator {
+  font-size: var(--text-xl);
+  color: var(--color-text-muted);
+}
+
+.repoName {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.badge {
+  font-size: var(--text-xs);
+  padding: 2px var(--spacing-sm);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+}
+
+.badgeFork {
+  @extend .badge;
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.githubButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+}
+
+.description {
+  margin: 0;
+  font-size: var(--text-md);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.topic {
+  font-size: var(--text-xs);
+  padding: 3px var(--spacing-sm);
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent-primary);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+@media (max-width: 600px) {
+  .heroTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

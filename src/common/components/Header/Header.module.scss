@@ -1,0 +1,14 @@
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.headerInner {
+  position: absolute;
+  left: 24px;
+}

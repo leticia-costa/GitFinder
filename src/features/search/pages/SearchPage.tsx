@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { useSearchUsers } from "../hooks/useSearchUsers";
-import { LoadingGrid } from "../components/LoadingGrid";
-import { EmptyState } from "../components/EmptyState";
-import { SearchBar } from "../components/SearchBar";
+import { LoadingGrid } from "../components/LoadingGrid/LoadingGrid";
+import { EmptyState } from "../components/EmptyState/EmptyState";
+import { SearchBar } from "../components/SearchBar/SearchBar";
 import styles from "./SearchPage.module.scss";
-import { UserCard } from "../components/UserCard";
+import { UserCard } from "../components/UserCard/UserCard";
 import { useDebounce } from "../../../common/hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { Logo } from "../../../common/components/Logo/Logo";
@@ -48,6 +48,7 @@ export const SearchPage = () => {
               onSearch={handleSearch}
               isLoading={isLoading}
               value={query}
+              setValue={(value) => setSearchParams(value ? { q: value } : {})}
             />
           </div>
 

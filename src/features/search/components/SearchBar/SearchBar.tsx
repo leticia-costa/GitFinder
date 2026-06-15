@@ -1,22 +1,25 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import styles from "./SearchBar.module.scss";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
   isLoading?: boolean;
-  value?: string;
+  value: string;
+  setValue: (value: string) => void;
 }
 
 export const SearchBar = ({
   onSearch,
   isLoading = false,
   value,
+  setValue,
 }: SearchBarProps) => {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onSearch(e.target.value);
+      setValue(e.target.value);
     },
-    [onSearch],
+    [onSearch, setValue],
   );
 
   return (
