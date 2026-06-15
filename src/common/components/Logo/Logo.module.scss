@@ -1,0 +1,51 @@
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sm {
+  gap: var(--spacing-sm);
+
+  .logoImage {
+    width: 24px;
+    height: 24px;
+  }
+
+  .logoText {
+    font-size: var(--text-lg);
+  }
+}
+
+.md {
+  gap: var(--spacing-sm);
+
+  .logoImage {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logoText {
+    font-size: var(--text-xl);
+  }
+}
+
+.lg {
+  gap: var(--spacing-md);
+
+  .logoImage {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logoText {
+    font-size: var(--text-2xl);
+  }
+}
+
+.logoText {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  margin: 0;
+}

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './UserCard.module.scss'
-import type { UserSearchItem } from '../../../features/search/types/UserSearchItem'
+import type { UserSearchItem } from '../../types/UserSearchItem'
 
 interface UserCardProps {
   user: UserSearchItem

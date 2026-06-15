@@ -1,0 +1,19 @@
+.wrapper {
+  border-radius: 50%;
+  border: 2px solid var(--color-border-default);
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: var(--color-bg-secondary);
+
+  &.sm  { width: 32px;  height: 32px; }
+  &.md  { width: 48px;  height: 48px; }
+  &.lg  { width: 80px;  height: 80px; }
+  &.xl  { width: 120px; height: 120px; border-width: 3px; }
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

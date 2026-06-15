@@ -1,21 +1,33 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useSearchUsers } from "../hooks/useSearchUsers";
 import { LoadingGrid } from "../components/LoadingGrid";
 import { EmptyState } from "../components/EmptyState";
-import { SearchBar } from "../../../common/components/SearchBar";
+import { SearchBar } from "../components/SearchBar";
 import styles from "./SearchPage.module.scss";
-import { UserCard } from "../../../common/components/UserCard";
+import { UserCard } from "../components/UserCard";
 import { useDebounce } from "../../../common/hooks/useDebounce";
+import { useSearchParams } from "react-router-dom";
+import { Logo } from "../../../common/components/Logo/Logo";
 
 export const SearchPage = () => {
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const query = searchParams.get("q") ?? "";
+
   const debouncedSearch = useDebounce(query, 1000);
 
   const { data, isLoading, isError } = useSearchUsers(debouncedSearch);
 
-  const handleSearch = useCallback((value: string) => {
-    setQuery(value);
-  }, []);
+  const handleSearch = useCallback(
+    (value: string) => {
+      if (value) {
+        setSearchParams({ q: value });
+      } else {
+        setSearchParams({});
+      }
+    },
+    [setSearchParams],
+  );
 
   const hasResults = data && data.items.length > 0;
   const isEmpty = data && data.items.length === 0 && query.length > 0;
@@ -25,21 +37,18 @@ export const SearchPage = () => {
       <header className={styles.header}>
         <div className={styles.card}>
           <div className={styles.logo}>
-            <div className={styles.logoTitle}>
-              <img
-                src="/src/assets/logo.png"
-                alt="GitFinder Logo"
-                className={styles.logoImage}
-              />
-              <h1 className={styles.logoText}>Git Finder</h1>
-            </div>
+            <Logo />
             <span className={styles.logoSubtitle}>
               Encontre usuários do GitHub com facilidade
             </span>
           </div>
 
           <div className={styles.searchWrapper}>
-            <SearchBar onSearch={handleSearch} isLoading={isLoading} />
+            <SearchBar
+              onSearch={handleSearch}
+              isLoading={isLoading}
+              value={query}
+            />
           </div>
 
           {hasResults && (
