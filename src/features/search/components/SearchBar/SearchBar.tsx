@@ -10,9 +10,9 @@ interface SearchBarProps {
 export const SearchBar = ({
   onSearch,
   isLoading = false,
-  initialValue = '',
+  initialValue = "",
 }: SearchBarProps) => {
-    const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(initialValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
