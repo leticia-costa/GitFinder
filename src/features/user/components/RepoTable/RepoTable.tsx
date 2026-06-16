@@ -1,18 +1,34 @@
-import type { Repository } from '../../../repository/types/Repositoty'
-import styles from './RepoTable.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { EmptyState } from "../../../../common/components/EmptyState/EmptyState";
+import type { Repository } from "../../../repository/types/Repositoty";
+import styles from "./RepoTable.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface RepoTableProps {
-  repos: Repository[]
-  login: string
+  repos: Repository[];
+  login: string;
+  hasFilters?: boolean;
 }
 
-export const RepoTable = ({ repos, login }: RepoTableProps) => {
-  const navigate = useNavigate()
+export const RepoTable = ({ repos, login, hasFilters }: RepoTableProps) => {
+  const navigate = useNavigate();
 
-  if (repos.length === 0) {
-    return <p className={styles.empty}>Nenhum repositório encontrado.</p>
+  if (!hasFilters && repos.length === 0) {
+    return (
+      <EmptyState
+        type="not-found"
+        title="Nenhum repositório encontrado."
+        description="Não há repositórios para exibir."
+      />
+    );
   }
+  if (hasFilters && repos.length === 0)
+    return (
+      <EmptyState
+        type="not-found"
+        title="Nenhum repositório encontrado."
+        description="Tente um nome de repositório diferente."
+      />
+    );
 
   return (
     <div className={styles.tableWrapper}>
@@ -46,13 +62,19 @@ export const RepoTable = ({ repos, login }: RepoTableProps) => {
                   <span className={styles.noLang}>—</span>
                 )}
               </td>
-              <td className={styles.number}>{repo.stargazers_count.toLocaleString('pt-BR')}</td>
-              <td className={styles.number}>{repo.forks_count.toLocaleString('pt-BR')}</td>
-              <td className={styles.number}>{repo.open_issues_count.toLocaleString('pt-BR')}</td>
+              <td className={styles.number}>
+                {repo.stargazers_count.toLocaleString("pt-BR")}
+              </td>
+              <td className={styles.number}>
+                {repo.forks_count.toLocaleString("pt-BR")}
+              </td>
+              <td className={styles.number}>
+                {repo.open_issues_count.toLocaleString("pt-BR")}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};

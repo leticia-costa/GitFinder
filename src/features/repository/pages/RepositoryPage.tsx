@@ -5,6 +5,7 @@ import { Button } from "../../../common/components/Button/Button";
 import { Header } from "../../../common/components/Header/Header";
 import { RepositoryHero } from "../components/RepositoryHero/RepositoryHero";
 import { InfoGrid } from "../components/InfoGrid/InfroGrid";
+import { EmptyState } from "../../../common/components/EmptyState/EmptyState";
 
 export const RepositoryPage = () => {
   const { userName = "", repo = "" } = useParams<{
@@ -13,7 +14,7 @@ export const RepositoryPage = () => {
   }>();
 
   const { data, isLoading, isError } = useGetRepository(userName, repo);
-  
+
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -27,7 +28,7 @@ export const RepositoryPage = () => {
   if (isError || !data) {
     return (
       <div className={styles.centered}>
-        <p className={styles.errorText}>Repositório não encontrado.</p>
+        <EmptyState type="error" title="Repositório não encontrado" description="Não foi possível localizar este repositório." />
         <Button variant="outline" onClick={() => navigate(-1)}>
           Voltar
         </Button>

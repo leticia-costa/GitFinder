@@ -14,6 +14,8 @@ import {
 } from "../utils/SortRepos/sortRepos";
 import { useUserRepos } from "../hooks/useUserRepos";
 import { Button } from "../../../common/components/Button/Button";
+import { EmptyState } from "../../../common/components/EmptyState/EmptyState";
+import { filterRepos } from "../utils/FilterRepos/filterRepos";
 
 export const UserPage = () => {
   const { userName = "" } = useParams<{ userName: string }>();
@@ -38,9 +40,7 @@ export const UserPage = () => {
   const totalStars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
 
   const processedRepos = useMemo(() => {
-    const filtered = filter
-      ? repos.filter((r) => r.name.toLowerCase().includes(filter.toLowerCase()))
-      : repos;
+    const filtered = filterRepos(repos, filter);
     return sortRepos(filtered, sort);
   }, [repos, filter, sort]);
 
@@ -52,9 +52,11 @@ export const UserPage = () => {
     );
   if (userError || !user)
     return (
-      <div className={styles.centered}>
-        <p>Usuário não encontrado.</p>
-      </div>
+      <EmptyState
+        title="Usuário não encontrado."
+        description="Não foi possível localizar este usuario."
+        type="error"
+      />
     );
 
   return (
@@ -110,7 +112,11 @@ export const UserPage = () => {
             </div>
           ) : (
             <>
-              <RepoTable repos={processedRepos} login={userName} />
+              <RepoTable
+                repos={processedRepos}
+                login={userName}
+                hasFilters={!!filter}
+              />
 
               {hasNextPage && (
                 <Button

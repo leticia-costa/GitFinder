@@ -2,27 +2,27 @@ import { describe, expect, it } from "vitest";
 import { formatDate } from "./formatDate";
 
 describe("formatDate", () => {
-  it("should format ISO date to pt-BR", () => {
-    const result = formatDate("2025-01-15T12:00:00Z");
+  it("should format a string date", () => {
+    const date = "2025-03-01T12:00:00Z";
 
-    expect(result).toContain("15");
-    expect(result.toLowerCase()).toContain("jan");
-    expect(result).toContain("2025");
+    const expected = "01 de mar. de 2025";
+
+    expect(formatDate(date)).toBe(expected);
   });
 
-  it("should accept Date instances", () => {
-    const result = formatDate(new Date("2025-06-11T00:00:00Z"));
+  it("should format a Date instance", () => {
+    const date = new Date("2026-06-11T12:00:00Z");
 
-    expect(result).toContain("11");
-    expect(result).toContain("2025");
+    const expected = "11 de jun. de 2026";
+
+    expect(formatDate(date)).toBe(expected);
   });
 
   it("should support custom locale", () => {
-    const result = formatDate(
-      "2025-01-15T12:00:00Z",
-      "en-US",
-    );
+    const date = "2025-01-25T12:00:00Z";
 
-    expect(result).toContain("2025");
+    const expected = "Jan 25, 2025";
+
+    expect(formatDate(date, "en-US")).toBe(expected);
   });
 });

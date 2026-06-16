@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useSearchUsers } from "../hooks/useSearchUsers";
 import { LoadingGrid } from "../components/LoadingGrid/LoadingGrid";
-import { EmptyState } from "../components/EmptyState/EmptyState";
+import { EmptyState } from "../../../common/components/EmptyState/EmptyState";
 import { SearchBar } from "../components/SearchBar/SearchBar";
 import styles from "./SearchPage.module.scss";
 import { UserCard } from "../components/UserCard/UserCard";
@@ -71,9 +71,28 @@ export const SearchPage = () => {
 
       <main className={styles.main}>
         {isLoading && <LoadingGrid count={6} />}
-        {!isLoading && isError && <EmptyState type="error" />}
-        {!isLoading && isEmpty && <EmptyState type="not-found" query={query} />}
-        {!isLoading && !query && <EmptyState type="idle" />}
+        {!isLoading && isError && (
+          <EmptyState
+            type="error"
+            title="Algo deu errado"
+            description="Não foi possível completar a busca. Verifique sua conexão e tente novamente."
+          />
+        )}
+        {!isLoading && isEmpty && (
+          <EmptyState
+            type="not-found"
+            query={query}
+            title="Nenhum usuário encontrado"
+            description="Tente um nome de usuário diferente."
+          />
+        )}
+        {!isLoading && !query && (
+          <EmptyState
+            type="idle"
+            title="Busque um usuário do GitHub"
+            description="Digite um nome de usuário para começar a explorar perfis e repositórios."
+          />
+        )}
         {!isLoading && hasResults && (
           <div className={styles.grid}>
             {users.map((user) => (

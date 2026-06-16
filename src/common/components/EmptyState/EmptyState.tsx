@@ -1,8 +1,10 @@
 import styles from './EmptyState.module.scss'
 
 interface EmptyStateProps {
-  type: 'idle' | 'not-found' | 'error'
-  query?: string
+  type: "idle" | "not-found" | "error";
+  query?: string;
+  title: string;
+  description: string;
 }
 
 const states = {
@@ -13,8 +15,6 @@ const states = {
         <path d="m21 21-4.35-4.35" />
       </svg>
     ),
-    title: 'Busque um usuário do GitHub',
-    description: 'Digite um nome de usuário para começar a explorar perfis e repositórios.',
   },
   'not-found': {
     icon: (
@@ -25,8 +25,6 @@ const states = {
         <line x1="15" y1="9" x2="15.01" y2="9" />
       </svg>
     ),
-    title: 'Nenhum usuário encontrado',
-    description: 'Tente um nome de usuário diferente.',
   },
   error: {
     icon: (
@@ -36,12 +34,10 @@ const states = {
         <line x1="12" y1="16" x2="12.01" y2="16" />
       </svg>
     ),
-    title: 'Algo deu errado',
-    description: 'Não foi possível completar a busca. Verifique sua conexão e tente novamente.',
   },
 }
 
-export const EmptyState = ({ type, query }: EmptyStateProps) => {
+export const EmptyState = ({ type, query, title, description }: EmptyStateProps) => {
   const state = states[type]
 
   return (
@@ -49,11 +45,11 @@ export const EmptyState = ({ type, query }: EmptyStateProps) => {
       <span className={`${styles.icon} ${styles[type]}`}>
         {state.icon}
       </span>
-      <h3 className={styles.title}>{state.title}</h3>
+      <h3 className={styles.title}>{title}</h3>
       <p className={styles.description}>
         {type === 'not-found' && query
-          ? `Nenhum resultado para "${query}". ${state.description}`
-          : state.description}
+          ? `Nenhum resultado para "${query}". ${description}`
+          : description}
       </p>
     </div>
   )

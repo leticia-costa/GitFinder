@@ -4,8 +4,6 @@ Aplicação web para explorar perfis e repositórios do GitHub, desenvolvida com
 
 ---
 
-## Stack
-
 ### Core
 - **React 18** — biblioteca de UI
 - **TypeScript** — tipagem estática
@@ -25,7 +23,6 @@ Aplicação web para explorar perfis e repositórios do GitHub, desenvolvida com
 - **Vitest** — test runner
 - **React Testing Library** — renderização de componentes
 - **jest-dom** — matchers de DOM
-- **user-event** — simulação de interações do usuário
 
 ### Testes E2E
 - **Cypress** — testes de fluxo completo com mocks via fixtures
@@ -105,20 +102,24 @@ O projeto adota **Feature-Based Architecture**, onde cada funcionalidade é isol
 src/
 ├── features/
 │   ├── search/                  # Busca de usuários
-│   │   ├── components/          # SearchBar, UserCard, EmptyState, LoadingGrid
+│   │   ├── components/          # SearchBar, UserCard, LoadingGrid
 │   │   ├── hooks/               # useSearchUsers
+│   │   ├── types/               # Interfaces TypeScript
 │   │   └── pages/
 │   │       └── SearchPage/
 │   │
 │   ├── user/                    # Perfil do usuário
 │   │   ├── components/          # Siderbar, RepoTable
 │   │   ├── hooks/               # useGetUser, useUserRepos
+│   │   ├── types/               # Interfaces TypeScript
+│   │   ├── utils/               # Funções utilitárias da página como sort e filter
 │   │   └── pages/
 │   │       └── UserPage/
 │   │
 │   └── repository/              # Repositórios
 │       ├── components/          # InfoGrid, RepositoryGrid
 │       ├── hooks/               # useGetRepository
+│       ├── types/               # Interfaces TypeScript
 │       └── pages/
 │           └── RepositoryPage/
 │
@@ -126,7 +127,7 @@ src/
 │   ├── api/                     # Consumo das apis
 │   ├── components/              # Componentes reutilizáveis
 │   ├── hooks/                   # Hooks genéricos reutilizáveis
-│   ├── services/                # Instância do Axios e interceptors
+│   ├── services/                # Instância do Axios
 │   ├── types/                   # Interfaces TypeScript
 │   └── utils/                   # Funções utilitárias 
 │
@@ -153,9 +154,9 @@ Endpoints utilizados:
 | Hook | Método | Endpoint |
 |---|---|---|
 | `useSearchUsers` | GET | `/search/users?q={query}&page={page}&per_page=30` |
-| `useGetUser` | GET | `/users/{login}` |
-| `useUserRepos` | GET | `/users/{login}/repos?per_page=100` |
-| `useGetRepository` | GET | `/repos/{login}/{repo}` |
+| `useGetUser` | GET | `/users/${userName}` |
+| `useUserRepos` | GET | `/users/${userName}/repos?per_page=100` |
+| `useGetRepository` | GET | `/repos/${userName}/${repo}` |
 
 Documentação completa: [docs.github.com/en/rest](https://docs.github.com/en/rest)
 
@@ -252,17 +253,6 @@ Todas as variáveis de design ficam em `src/styles/variables.scss` e estão disp
 
 ---
 
-## Cache e Paginação
-
-### Estratégia de cache (React Query)
-
-| Query | staleTime | gcTime |
-|---|---|---|
-| Busca de usuários | 2 min | 5 min |
-| Perfil do usuário | 5 min | 10 min |
-| Repositórios | 5 min | 10 min |
-| Repositório específico | 5 min | 10 min |
-
 ### Paginação
 
 - **Busca de usuários** — `useInfiniteQuery` com `hasNextPage` calculado via `total_count` retornado pela API
@@ -278,7 +268,7 @@ Cobertura com Vitest + React Testing Library:
 
 - Componentes de UI (renderização, interações, estados)
 - Hooks customizados
-- Funções utilitárias (sort, formatação)
+- Funções utilitárias (sort, filter, formatação)
 
 ### E2E
 
@@ -287,7 +277,7 @@ Os testes E2E usam fixtures locais para mockar todas as chamadas à API via `cy.
 Cobertura:
 
 - **SearchPage** — estado inicial, resultados, lista vazia, erro de API, limpar busca, contador
-- **UserPage** — dados do perfil, tabela de repositórios, filtro por nome, ordenação, navegação
+- **UserPage** — dados do perfil, tabela de repositórios, lista vazia, filtro por nome, ordenação, navegação
 - **RepositoryPage** — breadcrumb, stats, info cards, tópicos, clone URL, copiar, link externo, erro 404
 - **Fluxo completo** — busca → perfil → repositório → perfil → busca
 

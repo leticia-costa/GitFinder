@@ -1,19 +1,25 @@
-import styles from './RadioGroup.module.scss'
+import styles from "./RadioGroup.module.scss";
 
 interface RadioOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 interface RadioGroupProps {
-  label?: string
-  name: string
-  options: RadioOption[]
-  value: string
-  onChange: (value: string) => void
+  label?: string;
+  name: string;
+  options: RadioOption[];
+  value: string;
+  onChange: (value: string) => void;
 }
 
-export function RadioGroup({ label, name, options, value, onChange }: RadioGroupProps) {
+export const RadioGroup = ({
+  label,
+  name,
+  options,
+  value,
+  onChange,
+}: RadioGroupProps) => {
   return (
     <fieldset className={styles.fieldset}>
       {label && <legend className={styles.legend}>{label}</legend>}
@@ -34,5 +40,5 @@ export function RadioGroup({ label, name, options, value, onChange }: RadioGroup
         ))}
       </div>
     </fieldset>
-  )
-}
+  );
+};
