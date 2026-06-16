@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Logo.module.scss";
+import logoImg from '../../../assets/logo.png'
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
@@ -14,7 +15,7 @@ export const Logo = ({ size = "lg" }: LogoProps) => {
       onClick={() => navigate("/")}
     >
       <img
-        src="/src/assets/logo.png"
+        src={logoImg}
         alt="GitFinder Logo"
         className={styles.logoImage}
       />

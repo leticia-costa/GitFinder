@@ -1,4 +1,3 @@
-
 .header {
   position: relative;
   display: flex;
@@ -11,4 +10,14 @@
 .headerInner {
   position: absolute;
   left: 24px;
+}
+@media (max-width: 768px) {
+  .header {
+    justify-content: space-between;
+  }
+
+  .headerInner {
+    position: relative;
+    left: 0;
+  }
 }
