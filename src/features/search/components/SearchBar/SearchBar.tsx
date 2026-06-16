@@ -1,26 +1,28 @@
-import { useCallback } from "react";
+import { useState } from "react";
 import styles from "./SearchBar.module.scss";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
   isLoading?: boolean;
-  value: string;
-  setValue: (value: string) => void;
+  initialValue: string;
 }
 
 export const SearchBar = ({
   onSearch,
   isLoading = false,
-  value,
-  setValue,
+  initialValue = '',
 }: SearchBarProps) => {
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      onSearch(e.target.value);
-      setValue(e.target.value);
-    },
-    [onSearch, setValue],
-  );
+    const [value, setValue] = useState(initialValue)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    onSearch(e.target.value);
+  };
+
+  const handleClear = () => {
+    setValue("");
+    onSearch("");
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -56,10 +58,7 @@ export const SearchBar = ({
         {value && !isLoading && (
           <button
             className={styles.clearButton}
-            onClick={() => {
-              setValue("");
-              onSearch("");
-            }}
+            onClick={handleClear}
             aria-label="Limpar busca"
           >
             <svg

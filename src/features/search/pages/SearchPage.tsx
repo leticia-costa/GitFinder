@@ -39,7 +39,8 @@ export const SearchPage = () => {
   );
 
   const hasResults = users && total > 0;
-  const isEmpty = users && total === 0 && query.length > 0;
+  const isEmpty = users && total === 0 && debouncedSearch.length > 0;
+  const isPending = query !== debouncedSearch;
 
   return (
     <div className={styles.page}>
@@ -55,9 +56,8 @@ export const SearchPage = () => {
           <div className={styles.searchWrapper}>
             <SearchBar
               onSearch={handleSearch}
-              isLoading={isLoading}
-              value={query}
-              setValue={(value) => setSearchParams(value ? { q: value } : {})}
+              isLoading={isLoading || isPending}
+              initialValue={query}
             />
           </div>
 
@@ -70,15 +70,15 @@ export const SearchPage = () => {
       </header>
 
       <main className={styles.main}>
-        {isLoading && <LoadingGrid count={6} />}
-        {!isLoading && isError && (
+        {(isLoading || isPending) && <LoadingGrid count={6} />}
+        {!isLoading && !isPending && isError && (
           <EmptyState
             type="error"
             title="Algo deu errado"
             description="Não foi possível completar a busca. Verifique sua conexão e tente novamente."
           />
         )}
-        {!isLoading && isEmpty && (
+        {!isLoading && !isPending && isEmpty && (
           <EmptyState
             type="not-found"
             query={query}
@@ -86,14 +86,14 @@ export const SearchPage = () => {
             description="Tente um nome de usuário diferente."
           />
         )}
-        {!isLoading && !query && (
+        {!isLoading && !isPending && !query && (
           <EmptyState
             type="idle"
             title="Busque um usuário do GitHub"
             description="Digite um nome de usuário para começar a explorar perfis e repositórios."
           />
         )}
-        {!isLoading && hasResults && (
+        {!isLoading && !isPending && hasResults && (
           <div className={styles.grid}>
             {users.map((user) => (
               <UserCard key={user.id} user={user} />
