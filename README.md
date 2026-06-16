@@ -91,14 +91,14 @@ npx cypress open
 
 # Rodar um teste específico
 npx cypress run --spec "cypress/e2e/full-flow.cy.ts"
-
 ---
+````
 
 ## Arquitetura
 
 O projeto adota **Feature-Based Architecture**, onde cada funcionalidade é isolada em sua própria pasta com seus próprios componentes, hooks e serviços. Código verdadeiramente compartilhado entre features fica em `common`.
 
-````
+
 src/
 ├── features/
 │   ├── search/                  # Busca de usuários
