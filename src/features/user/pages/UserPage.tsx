@@ -28,7 +28,7 @@ export const UserPage = () => {
   } = useGetUser(userName);
 
   const {
-    data: repos = [],
+    repos,
     isLoading: loadingRepos,
     fetchNextPage,
     hasNextPage,
@@ -66,7 +66,7 @@ export const UserPage = () => {
           <div className={styles.reposHeader}>
             <h2 className={styles.reposTitle}>
               Repositórios
-              <span className={styles.reposCount}>{repos.length}</span>
+              <span className={styles.reposCount}>{user?.public_repos}</span>
             </h2>
           </div>
 
@@ -114,10 +114,12 @@ export const UserPage = () => {
 
               {hasNextPage && (
                 <Button
+                  variant="outline"
                   onClick={() => fetchNextPage()}
-                  disabled={isFetchingNextPage}
+                  isLoading={isFetchingNextPage}
                 >
-                  {isFetchingNextPage ? "Carregando..." : "Carregar mais"}
+                  Carregar mais{" "}
+                  {isFetchingNextPage ? "" : `(${repos.length} carregados)`}
                 </Button>
               )}
             </>

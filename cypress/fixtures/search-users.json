@@ -1,0 +1,20 @@
+{
+  "total_count": 2,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 1,
+      "login": "torvalds",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1024025",
+      "html_url": "https://github.com/torvalds",
+      "score": 1.0
+    },
+    {
+      "id": 2,
+      "login": "torvalds-fan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1024026",
+      "html_url": "https://github.com/torvalds-fan",
+      "score": 0.5
+    }
+  ]
+}

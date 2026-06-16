@@ -10,7 +10,7 @@ export const getUserRepos = async (
     {
       params: {
         page,
-        per_page: 50,
+        per_page: 100,
         sort: "updated",
       },
     },

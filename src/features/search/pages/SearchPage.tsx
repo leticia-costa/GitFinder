@@ -8,6 +8,7 @@ import { UserCard } from "../components/UserCard/UserCard";
 import { useDebounce } from "../../../common/hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { Logo } from "../../../common/components/Logo/Logo";
+import { Button } from "../../../common/components/Button/Button";
 
 export const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,7 +17,15 @@ export const SearchPage = () => {
 
   const debouncedSearch = useDebounce(query, 1000);
 
-  const { data, isLoading, isError } = useSearchUsers(debouncedSearch);
+  const {
+    users,
+    total,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useSearchUsers(debouncedSearch);
 
   const handleSearch = useCallback(
     (value: string) => {
@@ -29,8 +38,8 @@ export const SearchPage = () => {
     [setSearchParams],
   );
 
-  const hasResults = data && data.items.length > 0;
-  const isEmpty = data && data.items.length === 0 && query.length > 0;
+  const hasResults = users && total > 0;
+  const isEmpty = users && total === 0 && query.length > 0;
 
   return (
     <div className={styles.page}>
@@ -54,7 +63,7 @@ export const SearchPage = () => {
 
           {hasResults && (
             <p className={styles.count}>
-              {data.total_count.toLocaleString("pt-BR")} usuários encontrados
+              {total.toLocaleString("pt-BR")} usuários encontrados
             </p>
           )}
         </div>
@@ -67,9 +76,19 @@ export const SearchPage = () => {
         {!isLoading && !query && <EmptyState type="idle" />}
         {!isLoading && hasResults && (
           <div className={styles.grid}>
-            {data.items.map((user) => (
+            {users.map((user) => (
               <UserCard key={user.id} user={user} />
             ))}
+            {hasNextPage && (
+              <Button
+                variant="outline"
+                onClick={() => fetchNextPage()}
+                isLoading={isFetchingNextPage}
+              >
+                Carregar mais{" "}
+                {isFetchingNextPage ? "" : `(${users.length} carregados)`}
+              </Button>
+            )}
           </div>
         )}
       </main>
